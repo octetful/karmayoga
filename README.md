@@ -2,6 +2,8 @@
 
 Java library for Task Organization.
 
+[![CircleCI Build Status](https://circleci.com/gh/sighosh2/karmayoga.svg?style=svg)](https://circleci.com/gh/sighosh2/karmayoga)
+
 ## Tech Stack
 * Java 11
 * Gradle
