@@ -18,6 +18,7 @@ test {
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.6'
     annotationProcessor 'org.projectlombok:lombok:1.18.6'
+    compile 'io.vavr:vavr:0.9.3'
     testCompile 'org.mockito:mockito-core:1.+'
     testCompile 'org.junit.jupiter:junit-jupiter:5.4.1'
     testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'

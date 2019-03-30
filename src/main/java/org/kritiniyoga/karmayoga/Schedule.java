@@ -1,46 +1,28 @@
 package org.kritiniyoga.karmayoga;
 
+import io.vavr.Tuple;
+import io.vavr.Tuple2;
+import io.vavr.control.Validation;
 import lombok.Value;
-
-import java.time.Duration;
+import org.kritiniyoga.karmayoga.validators.ScheduleValidator;
 
 @Value
 public class Schedule {
-    TimeSlot slot;
-    Task task;
+    private Task task;
+    private TimeSlot slot;
 
-    public Schedule(TimeSlot slot, Task task)
-            throws IllegalArgumentException {
-        checkParameters(slot, task);
-        this.slot = slot;
+    private Schedule(Task task, TimeSlot slot) {
         this.task = task;
+        this.slot = slot;
     }
 
-    private void checkParameters(TimeSlot slot, Task task)
-            throws IllegalArgumentException {
-        if (taskHasDeadline(task)
-                && isSlotAfterDeadline(slot, task)) {
-            throw new IllegalArgumentException("Slot cannot start after task deadline!");
-        } else if (taskHasEstimate(task)
-                && isTaskEstimateLargerThanSlot(slot, task)) {
-            throw new IllegalArgumentException("Slot is too small for task");
-        }
-    }
-
-    private boolean isTaskEstimateLargerThanSlot(TimeSlot slot, Task task) {
-        return task.getEstimate().compareTo(
-            Duration.between(slot.getStart(), slot.getEnd())) > 0;
-    }
-
-    private boolean taskHasEstimate(Task task) {
-        return task.getEstimate() != null;
-    }
-
-    private boolean isSlotAfterDeadline(TimeSlot slot, Task task) {
-        return slot.getStart().isAfter(task.getDeadline().toInstant());
-    }
-
-    private boolean taskHasDeadline(Task task) {
-        return task.getDeadline() != null;
+    public static Schedule createSchedule(TimeSlot slot, Task task) {
+        Tuple2<Task, TimeSlot> taskSlotTuple = Tuple.of(task, slot);
+        return Validation
+            .combine(
+                ScheduleValidator.checkSlotIsBeforeTaskEnds(taskSlotTuple),
+                ScheduleValidator.checkTaskFitsSlot(taskSlotTuple))
+            .ap((x, y) -> new Schedule(x._1, x._2))
+            .get();
     }
 }
