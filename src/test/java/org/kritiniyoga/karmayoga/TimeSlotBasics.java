@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -25,7 +26,7 @@ public class TimeSlotBasics {
         now = Instant.now();
         future = now.plus(2,
             ChronoUnit.HOURS);
-        timeSlot = new TimeSlot(now, future);
+        timeSlot = TimeSlot.createTimeSlot(now, future);
         halfSplit = now.plus(1, ChronoUnit.HOURS);
     }
 
@@ -36,8 +37,8 @@ public class TimeSlotBasics {
 
     @Test
     public void whenEndIsBeforeFuture_shouldThrowException() {
-        assertThrows( IllegalArgumentException.class,
-            () -> new TimeSlot(future, now));
+        assertThrows( NoSuchElementException.class,
+            () -> TimeSlot.createTimeSlot(future, now));
     }
 
     @Test
@@ -56,7 +57,7 @@ public class TimeSlotBasics {
     @Test
     public void givenAnInstanceOutside_whenSplittingSlots_shouldThrowException() {
         Instant outlyingSplitPoint = now.minus(3, ChronoUnit.HOURS);
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(NoSuchElementException.class,
             () -> timeSlot.split(outlyingSplitPoint));
     }
 }

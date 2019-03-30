@@ -13,5 +13,4 @@ public final class Task {
     Priority priority;
     Duration estimate;
     Date deadline;
-    TimeSlot slot;
 }
