@@ -22,7 +22,7 @@ public class Schedule {
             .combine(
                 ScheduleValidator.checkSlotIsBeforeTaskEnds(taskSlotTuple),
                 ScheduleValidator.checkTaskFitsSlot(taskSlotTuple))
-            .ap((x, y) -> new Schedule(x._1, x._2))
+            .ap((result1, result2) -> new Schedule(task, slot))
             .get();
     }
 }
