@@ -8,8 +8,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -44,7 +43,7 @@ public class TimeSlotBasics {
     @Test
     public void givenAnInstanceWithin_shouldBeAbleToSpitASlot() {
         List<TimeSlot> splitSlots = timeSlot.split(halfSplit);
-        assertThat(splitSlots, hasSize(2));
+        assertThat(splitSlots).hasSize(2);
     }
 
     @Test
