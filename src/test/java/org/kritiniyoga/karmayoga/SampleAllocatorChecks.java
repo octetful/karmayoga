@@ -54,7 +54,7 @@ public class SampleAllocatorChecks {
         Instant end = Instant.now().plus(4, ChronoUnit.HOURS);
         TimeSlot aSlot = TimeSlot.createTimeSlot(start, end);
 
-        Seq<Schedule> schedules = allocator.allocate(List.of(bTask), List.of(aSlot));
+        Seq<Schedule> schedules = allocator.allocate(List.of(aTask, bTask), List.of(aSlot));
 
         assertThat(schedules.get().getTask()).isEqualTo(bTask);
     }
