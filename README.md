@@ -1,6 +1,6 @@
 # Karmayoga :calendar:
 
-Java library for Task Organization with a focus on humans (not machines).
+Java library for Task Organization with a focus on humans :family: (not machines).
 
 ### Status
 * Tests: [![CircleCI](https://circleci.com/gh/octetful/karmayoga/tree/master.svg?style=svg&circle-token=fe220cb4c9b12e2ecee443271b464bc80aa780d2)](https://circleci.com/gh/octetful/karmayoga/tree/master)
