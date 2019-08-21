@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.kritiniyoga.karmayoga.allocators.SampleAllocator;
+import org.kritiniyoga.karmayoga.allocators.SimpleFirstFit;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -32,7 +33,7 @@ public class AllocatorChecks {
     }
 
     static Stream<Allocator> generateAllocators() {
-        return Stream.of(new SampleAllocator());
+        return Stream.of(new SampleAllocator(), new SimpleFirstFit());
     }
 
     @ParameterizedTest
