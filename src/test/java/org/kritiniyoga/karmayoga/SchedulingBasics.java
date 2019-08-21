@@ -6,7 +6,6 @@ import java.sql.Date;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -22,7 +21,7 @@ public class SchedulingBasics {
             deadline.plus(1, ChronoUnit.HOURS),
             deadline.plus(2, ChronoUnit.HOURS));
 
-        assertThrows(NoSuchElementException.class,
+        assertThrows(IllegalArgumentException.class,
             () -> Schedule.createSchedule(slotBeyondDeadline, task));
     }
 
@@ -33,7 +32,7 @@ public class SchedulingBasics {
         TimeSlot smallerSlot = TimeSlot.createTimeSlot(now,
             now.plus(1, ChronoUnit.HOURS));
 
-        assertThrows(NoSuchElementException.class,
+        assertThrows(IllegalArgumentException.class,
             () -> Schedule.createSchedule(smallerSlot, task));
     }
 }

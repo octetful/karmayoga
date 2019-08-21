@@ -18,11 +18,12 @@ public class Schedule {
 
     public static Schedule createSchedule(TimeSlot slot, Task task) {
         Tuple2<Task, TimeSlot> taskSlotTuple = Tuple.of(task, slot);
-        return Validation
+        var vResult = Validation
             .combine(
                 ScheduleValidator.checkSlotIsBeforeTaskEnds(taskSlotTuple),
                 ScheduleValidator.checkTaskFitsSlot(taskSlotTuple))
-            .ap((result1, result2) -> new Schedule(task, slot))
-            .get();
+            .ap((result1, result2) -> new Schedule(task, slot));
+        return vResult
+            .getOrElseThrow(() -> new IllegalArgumentException(vResult.getError().toString()));
     }
 }

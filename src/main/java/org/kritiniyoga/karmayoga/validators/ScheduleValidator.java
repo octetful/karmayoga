@@ -22,7 +22,7 @@ public class ScheduleValidator {
 
     private static Predicate<Tuple2<Task, TimeSlot>> isTaskFittingSlot =
         tuple2 -> tuple2._1.getEstimate() == null
-            || tuple2._1.getEstimate().compareTo(tuple2._2.length()) < 0;
+            || tuple2._1.getEstimate().compareTo(tuple2._2.length()) <= 0;
 
 
     protected static Validation<String, Tuple2<Task, TimeSlot>> applyValidationPredicate(Tuple2<Task, TimeSlot> taskSlot, Predicate<Tuple2<Task, TimeSlot>> predicate, String error)  {
