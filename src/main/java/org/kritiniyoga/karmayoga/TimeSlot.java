@@ -11,7 +11,7 @@ import java.time.Instant;
 import java.util.List;
 
 @Value
-public class TimeSlot {
+public class TimeSlot implements Comparable<TimeSlot> {
     Instant start, end;
 
     private TimeSlot(@NonNull Instant start, @NonNull Instant end) {
@@ -34,5 +34,10 @@ public class TimeSlot {
         Tuple2<Instant, Instant> validatedInstances =
             TimeSlotValidator.checkEndIsAfterStart(Tuple.of(start, end)).get();
         return new TimeSlot(validatedInstances._1, validatedInstances._2);
+    }
+
+    @Override
+    public int compareTo(TimeSlot o) {
+        return this.length().compareTo(o.length());
     }
 }
