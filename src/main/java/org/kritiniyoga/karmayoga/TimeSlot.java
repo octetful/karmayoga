@@ -2,13 +2,13 @@ package org.kritiniyoga.karmayoga;
 
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
+import io.vavr.collection.List;
 import lombok.NonNull;
 import lombok.Value;
 import org.kritiniyoga.karmayoga.validators.TimeSlotValidator;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.List;
 
 @Value
 public class TimeSlot implements Comparable<TimeSlot> {
