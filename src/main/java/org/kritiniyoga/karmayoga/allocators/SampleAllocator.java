@@ -25,7 +25,7 @@ public class SampleAllocator implements Allocator {
     private Schedule createSchedules(Tuple2<Optional<TimeSlot>,? extends Seq<Task>> optionalTuple2) {
         Task task = selectFirstTaskByPriorityAndEstimate(optionalTuple2._2);
         TimeSlot slot = optionalTuple2._1.get();
-        return Schedule.createSchedule(slot, task);
+        return Schedule.createScheduleOrFail(slot, task);
     }
 
     private boolean hasEmptySlot(Tuple2<Optional<TimeSlot>, ? extends Seq<Task>> slotTaskTuple) {
