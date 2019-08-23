@@ -7,7 +7,7 @@ import java.time.Duration;
 import java.util.Date;
 
 @Value
-@Builder
+@Builder(toBuilder = true)
 public final class Task {
     String title, notes;
     Priority priority;

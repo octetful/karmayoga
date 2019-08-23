@@ -5,6 +5,7 @@ import io.vavr.control.Validation;
 import org.kritiniyoga.karmayoga.Task;
 import org.kritiniyoga.karmayoga.TimeSlot;
 
+import java.sql.Date;
 import java.util.function.Predicate;
 
 import static io.vavr.API.$;
@@ -18,7 +19,7 @@ public class ScheduleValidator {
 
     private static Predicate<Tuple2<Task, TimeSlot>> isSlotBeforeDeadline =
         tuple2 -> tuple2._1.getDeadline() == null
-            || tuple2._2.getStart().isBefore(tuple2._1.getDeadline().toInstant());
+            || tuple2._2.getStart().compareTo(tuple2._1.getDeadline().toInstant()) <= 0;
 
     private static Predicate<Tuple2<Task, TimeSlot>> isTaskFittingSlot =
         tuple2 -> tuple2._1.getEstimate() == null
@@ -37,12 +38,18 @@ public class ScheduleValidator {
 
     public static Validation<String, Tuple2<Task, TimeSlot>> checkSlotIsBeforeTaskEnds(Tuple2<Task, TimeSlot> taskSlot)  {
         return applyValidationPredicate(taskSlot, isSlotBeforeDeadline,
-            ERROR_STRING_SLOT_AFTER_DEADLINE);
+            ERROR_STRING_SLOT_AFTER_DEADLINE
+                + " [Slot Start: " + Date.from(taskSlot._2.getStart())
+                + "Task End: " + taskSlot._1.getDeadline()
+                + "]");
     }
 
     public static Validation<String, Tuple2<Task, TimeSlot>> checkTaskFitsSlot(Tuple2<Task, TimeSlot> taskSlot) {
         return applyValidationPredicate(taskSlot, isTaskFittingSlot,
-            ERROR_STRING_TASK_BIGGER_THAN_SLOT);
+            ERROR_STRING_TASK_BIGGER_THAN_SLOT
+                + " [Slot Length: " + taskSlot._2.length()
+                + "Task Estimate: " + taskSlot._1.getEstimate()
+                + "]");
     }
 
 }
