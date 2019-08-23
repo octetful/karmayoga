@@ -4,6 +4,7 @@ import io.vavr.Tuple2;
 import io.vavr.control.Validation;
 
 import java.time.Instant;
+import java.util.Date;
 
 import static io.vavr.API.$;
 import static io.vavr.API.Case;
@@ -16,7 +17,10 @@ public class TimeSlotValidator {
     public static Validation<String, Tuple2<Instant, Instant>> checkEndIsAfterStart(Tuple2<Instant, Instant> instances) {
         return Match(instances).of(
             Case($(i -> i._1.isBefore(i._2)), Validation.valid(instances)),
-            Case($(), Validation.invalid(ERROR_MSG_END_BEFORE_START))
+            Case($(), Validation.invalid(ERROR_MSG_END_BEFORE_START
+                + " [End: " + Date.from(instances._2)
+                + " Start: " + Date.from(instances._1)
+                + "]"))
         );
     }
 }

@@ -3,24 +3,21 @@ package org.kritiniyoga.karmayoga;
 import io.vavr.collection.List;
 import io.vavr.collection.Seq;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.kritiniyoga.karmayoga.allocators.SampleAllocator;
-import org.kritiniyoga.karmayoga.allocators.SimpleFirstFit;
+import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class AllocatorChecks {
-
-    private Task twoHoursTask;
-    private Task fiveHoursTask;
-    private TimeSlot twoHoursSlot;
+public abstract class AllocatorChecks {
+    protected Allocator allocator;
+    protected Task twoHoursTask;
+    protected Task fiveHoursTask;
+    protected TimeSlot twoHoursSlot;
+    protected Seq<Schedule> schedules;
 
     @BeforeEach
     public void init() {
@@ -30,30 +27,27 @@ public class AllocatorChecks {
         Instant start = Instant.now().plus(2, ChronoUnit.HOURS);
         Instant end = Instant.now().plus(4, ChronoUnit.HOURS);
         twoHoursSlot = TimeSlot.createTimeSlot(start, end);
+
+        allocator = getAllocator();
     }
 
-    static Stream<Allocator> generateAllocators() {
-        return Stream.of(new SampleAllocator(), new SimpleFirstFit());
-    }
+    protected abstract Allocator getAllocator();
 
-    @ParameterizedTest
-    @MethodSource("generateAllocators")
-    public void givenTasksFittingSlots_whenAllocating_shouldAllocate(Allocator allocator) {
-        Seq<Schedule> schedules = allocator.allocate(List.of(twoHoursTask), List.of(twoHoursSlot));
+    @Test
+    public void givenTasksFittingSlots_whenAllocating_shouldAllocate() {
+        schedules = allocator.allocate(List.of(twoHoursTask), List.of(twoHoursSlot));
         assertThat(schedules.get().getTask()).isEqualTo(twoHoursTask);
     }
 
-    @ParameterizedTest
-    @MethodSource("generateAllocators")
-    public void givenTasksNotFittingSlots_whenAllocating_shouldNotAllocate(Allocator allocator) {
-        Seq<Schedule> schedules = allocator.allocate(List.of(fiveHoursTask), List.of(twoHoursSlot));
+    @Test
+    public void givenTasksNotFittingSlots_whenAllocating_shouldNotAllocate() {
+        schedules = allocator.allocate(List.of(fiveHoursTask), List.of(twoHoursSlot));
         assertThat(schedules).isEmpty();
     }
 
-    @ParameterizedTest
-    @MethodSource("generateAllocators")
-    public void givenAMixOfFittingAndNonFittingTasks_whenAllocating_shouldAllocateFittingTasks(Allocator allocator) {
-        Seq<Schedule> schedules = allocator.allocate(List.of(fiveHoursTask, twoHoursTask), List.of(twoHoursSlot));
+    @Test
+    public void givenAMixOfFittingAndNonFittingTasks_whenAllocating_shouldAllocateFittingTasks() {
+        schedules = allocator.allocate(List.of(fiveHoursTask, twoHoursTask), List.of(twoHoursSlot));
         assertThat(schedules.get().getTask()).isEqualTo(twoHoursTask);
     }
 }
