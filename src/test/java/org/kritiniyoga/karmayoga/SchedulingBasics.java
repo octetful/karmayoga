@@ -22,7 +22,7 @@ public class SchedulingBasics {
             deadline.plus(2, ChronoUnit.HOURS));
 
         assertThrows(IllegalArgumentException.class,
-            () -> Schedule.createSchedule(slotBeyondDeadline, task));
+            () -> Schedule.createScheduleOrFail(slotBeyondDeadline, task));
     }
 
     @Test
@@ -33,6 +33,6 @@ public class SchedulingBasics {
             now.plus(1, ChronoUnit.HOURS));
 
         assertThrows(IllegalArgumentException.class,
-            () -> Schedule.createSchedule(smallerSlot, task));
+            () -> Schedule.createScheduleOrFail(smallerSlot, task));
     }
 }

@@ -2,6 +2,7 @@ package org.kritiniyoga.karmayoga;
 
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
+import io.vavr.collection.Seq;
 import io.vavr.control.Validation;
 import lombok.Value;
 import org.kritiniyoga.karmayoga.validators.ScheduleValidator;
@@ -16,14 +17,22 @@ public class Schedule {
         this.slot = slot;
     }
 
-    public static Schedule createSchedule(TimeSlot slot, Task task) {
+    private static Validation<Seq<String>, Schedule> validatedSchedule(TimeSlot slot, Task task) {
         Tuple2<Task, TimeSlot> taskSlotTuple = Tuple.of(task, slot);
-        var vResult = Validation
+        return Validation
             .combine(
                 ScheduleValidator.checkSlotIsBeforeTaskEnds(taskSlotTuple),
                 ScheduleValidator.checkTaskFitsSlot(taskSlotTuple))
             .ap((result1, result2) -> new Schedule(task, slot));
+    }
+
+    public static Schedule createScheduleOrFail(TimeSlot slot, Task task) {
+        Validation<Seq<String>, Schedule> vResult = validatedSchedule(slot, task);
         return vResult
             .getOrElseThrow(() -> new IllegalArgumentException(vResult.getError().toString()));
+    }
+
+    public static boolean areValidScheduleParams(TimeSlot slot, Task task) {
+        return validatedSchedule(slot, task).isValid();
     }
 }
