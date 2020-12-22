@@ -1,6 +1,13 @@
 # Karmayoga :calendar:
 
-Java library for Task Organization with a focus on humans :family: (not machines).
+Karmayoga is a java software for Task Organization with a focus on humans :family: (not machines).
+
+Originally started with the goal of building a simple Java library with an opinionated view of automatic human task organization as a fitting problem, the project aimed to solve daily planning using simple algorithm implementations.
+
+Currently, we plan to extend it to be a fully usable software, integrated with online Calendars, and with possible future UI extensions in scope.
+
+Please refer to the [ADR sections](./docs/adr/index.md) for details on changes to the architecture and major directions of the project.
+
 
 ### Status
 * Tests: [![CircleCI](https://circleci.com/gh/octetful/karmayoga/tree/master.svg?style=svg&circle-token=fe220cb4c9b12e2ecee443271b464bc80aa780d2)](https://circleci.com/gh/octetful/karmayoga/tree/master)
@@ -9,7 +16,7 @@ Java library for Task Organization with a focus on humans :family: (not machines
 
 ## Tech Stack
 * Java 11
-* Gradle
+* Gradle 6
 * JUnit 5
 * Mockito
 
