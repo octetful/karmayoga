@@ -29,7 +29,7 @@ public abstract class AllocatorChecks {
 
         Instant start = Instant.now().plus(2, ChronoUnit.HOURS);
         Instant end = Instant.now().plus(4, ChronoUnit.HOURS);
-        twoHoursSlot = TimeSlot.createTimeSlot(start, end);
+        twoHoursSlot = TimeSlot.createFrom(start, end);
 
         allocator = getAllocator();
     }

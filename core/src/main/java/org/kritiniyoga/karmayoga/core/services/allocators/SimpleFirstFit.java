@@ -17,7 +17,7 @@ public class SimpleFirstFit implements Allocator {
 
     private Tuple2<List<Schedule>, TreeSet<TimeSlot>> directlyAllocate(Tuple2<List<Schedule>, TreeSet<TimeSlot>> scheduleSlotTuple, TimeSlot currentSlot, Task task) {
         return Tuple.of(
-            scheduleSlotTuple._1.append(Schedule.createScheduleOrFail(currentSlot, task)),
+            scheduleSlotTuple._1.append(Schedule.createFromOrFail(currentSlot, task)),
             scheduleSlotTuple._2
         );
     }
@@ -29,7 +29,7 @@ public class SimpleFirstFit implements Allocator {
     private Tuple2<List<Schedule>, TreeSet<TimeSlot>> splitSlotAndAllocate(Tuple2<List<Schedule>, TreeSet<TimeSlot>> scheduleSlotTuple, TimeSlot currentSlot, Task task) {
         List<TimeSlot> splits = currentSlot.split(findSplitPoint(currentSlot, task));
         return Tuple.of(
-            scheduleSlotTuple._1.append(Schedule.createScheduleOrFail(splits.get(0), task)),
+            scheduleSlotTuple._1.append(Schedule.createFromOrFail(splits.get(0), task)),
             scheduleSlotTuple._2.add(splits.get(1))
         );
     }

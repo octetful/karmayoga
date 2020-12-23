@@ -4,12 +4,12 @@ import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import io.vavr.collection.Seq;
 import io.vavr.control.Validation;
-import lombok.Value;
+import lombok.Data;
 import org.kritiniyoga.karmayoga.core.services.validators.ScheduleValidator;
 import org.kritiniyoga.karmayoga.core.values.TimeSlot;
 
 
-@Value
+@Data
 public class Schedule {
     Task task;
     TimeSlot slot;
@@ -28,7 +28,7 @@ public class Schedule {
             .ap((result1, result2) -> new Schedule(task, slot));
     }
 
-    public static Schedule createScheduleOrFail(TimeSlot slot, Task task) {
+    public static Schedule createFromOrFail(TimeSlot slot, Task task) {
         Validation<Seq<String>, Schedule> vResult = validatedSchedule(slot, task);
         return vResult
             .getOrElseThrow(() -> new IllegalArgumentException(vResult.getError().toString()));

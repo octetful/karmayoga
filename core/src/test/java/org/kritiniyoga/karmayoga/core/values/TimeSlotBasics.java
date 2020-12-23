@@ -26,7 +26,7 @@ public class TimeSlotBasics {
         now = Instant.now();
         future = now.plus(2,
             ChronoUnit.HOURS);
-        timeSlot = TimeSlot.createTimeSlot(now, future);
+        timeSlot = TimeSlot.createFrom(now, future);
         halfSplit = now.plus(1, ChronoUnit.HOURS);
     }
 
@@ -38,7 +38,7 @@ public class TimeSlotBasics {
     @Test
     public void whenEndIsBeforeFuture_shouldThrowException() {
         assertThrows( NoSuchElementException.class,
-            () -> TimeSlot.createTimeSlot(future, now));
+            () -> TimeSlot.createFrom(future, now));
     }
 
     @Test

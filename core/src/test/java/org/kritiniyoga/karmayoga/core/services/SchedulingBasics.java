@@ -20,22 +20,22 @@ public class SchedulingBasics {
             .deadline(
                 Date.from(deadline))
             .build();
-        TimeSlot slotBeyondDeadline = TimeSlot.createTimeSlot(
+        TimeSlot slotBeyondDeadline = TimeSlot.createFrom(
             deadline.plus(1, ChronoUnit.HOURS),
             deadline.plus(2, ChronoUnit.HOURS));
 
         assertThrows(IllegalArgumentException.class,
-            () -> Schedule.createScheduleOrFail(slotBeyondDeadline, task));
+            () -> Schedule.createFromOrFail(slotBeyondDeadline, task));
     }
 
     @Test
     public void givenASlotSmallerThanTask_whenCreatingSchedules_shouldThrowException() {
         Task task = Task.builder().estimate(Duration.ofHours(3)).build();
         Instant now = Instant.now();
-        TimeSlot smallerSlot = TimeSlot.createTimeSlot(now,
+        TimeSlot smallerSlot = TimeSlot.createFrom(now,
             now.plus(1, ChronoUnit.HOURS));
 
         assertThrows(IllegalArgumentException.class,
-            () -> Schedule.createScheduleOrFail(smallerSlot, task));
+            () -> Schedule.createFromOrFail(smallerSlot, task));
     }
 }

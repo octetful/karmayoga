@@ -21,8 +21,8 @@ public class TimeSlot implements Comparable<TimeSlot> {
 
     public List<TimeSlot> split(Instant splitPoint) {
         return List.of(
-            createTimeSlot(this.start, splitPoint),
-            createTimeSlot(splitPoint, this.end)
+            createFrom(this.start, splitPoint),
+            createFrom(splitPoint, this.end)
         );
     }
 
@@ -30,7 +30,7 @@ public class TimeSlot implements Comparable<TimeSlot> {
         return Duration.between(start, end);
     }
 
-    public static TimeSlot createTimeSlot(@NonNull Instant start, @NonNull Instant end) {
+    public static TimeSlot createFrom(@NonNull Instant start, @NonNull Instant end) {
         Tuple2<Instant, Instant> validatedInstances =
             TimeSlotValidator.checkEndIsAfterStart(Tuple.of(start, end)).get();
         return new TimeSlot(validatedInstances._1, validatedInstances._2);

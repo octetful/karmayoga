@@ -20,7 +20,7 @@ class SimpleFirstFitTest extends AllocatorChecks {
         super.init();
         Instant start = Instant.now().plus(2, ChronoUnit.HOURS);
         Instant end = Instant.now().plus(9, ChronoUnit.HOURS);
-        sevenHoursSlot = TimeSlot.createTimeSlot(start, end);
+        sevenHoursSlot = TimeSlot.createFrom(start, end);
     }
 
     @Override
