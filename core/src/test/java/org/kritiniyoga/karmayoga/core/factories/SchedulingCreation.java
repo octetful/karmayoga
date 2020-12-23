@@ -1,7 +1,6 @@
-package org.kritiniyoga.karmayoga.core.services;
+package org.kritiniyoga.karmayoga.core.factories;
 
 import org.junit.jupiter.api.Test;
-import org.kritiniyoga.karmayoga.core.entities.Schedule;
 import org.kritiniyoga.karmayoga.core.entities.Task;
 import org.kritiniyoga.karmayoga.core.values.TimeSlot;
 
@@ -12,7 +11,7 @@ import java.time.temporal.ChronoUnit;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class SchedulingBasics {
+public class SchedulingCreation {
     @Test
     public void givenASlotAfterDeadline_whenCreatingSchedules_shouldThrowException() {
         Instant deadline = Instant.now();
@@ -25,7 +24,7 @@ public class SchedulingBasics {
             deadline.plus(2, ChronoUnit.HOURS));
 
         assertThrows(IllegalArgumentException.class,
-            () -> Schedule.createFromOrFail(slotBeyondDeadline, task));
+            () -> ScheduleFactory.createFromOrFail(slotBeyondDeadline, task));
     }
 
     @Test
@@ -36,6 +35,6 @@ public class SchedulingBasics {
             now.plus(1, ChronoUnit.HOURS));
 
         assertThrows(IllegalArgumentException.class,
-            () -> Schedule.createFromOrFail(smallerSlot, task));
+            () -> ScheduleFactory.createFromOrFail(smallerSlot, task));
     }
 }

@@ -7,6 +7,7 @@ import io.vavr.collection.Seq;
 import io.vavr.collection.TreeSet;
 import org.kritiniyoga.karmayoga.core.entities.Schedule;
 import org.kritiniyoga.karmayoga.core.entities.Task;
+import org.kritiniyoga.karmayoga.core.factories.ScheduleFactory;
 import org.kritiniyoga.karmayoga.core.services.Allocator;
 import org.kritiniyoga.karmayoga.core.values.TimeSlot;
 
@@ -17,7 +18,7 @@ public class SimpleFirstFit implements Allocator {
 
     private Tuple2<List<Schedule>, TreeSet<TimeSlot>> directlyAllocate(Tuple2<List<Schedule>, TreeSet<TimeSlot>> scheduleSlotTuple, TimeSlot currentSlot, Task task) {
         return Tuple.of(
-            scheduleSlotTuple._1.append(Schedule.createFromOrFail(currentSlot, task)),
+            scheduleSlotTuple._1.append(ScheduleFactory.createFromOrFail(currentSlot, task)),
             scheduleSlotTuple._2
         );
     }
@@ -29,7 +30,7 @@ public class SimpleFirstFit implements Allocator {
     private Tuple2<List<Schedule>, TreeSet<TimeSlot>> splitSlotAndAllocate(Tuple2<List<Schedule>, TreeSet<TimeSlot>> scheduleSlotTuple, TimeSlot currentSlot, Task task) {
         List<TimeSlot> splits = currentSlot.split(findSplitPoint(currentSlot, task));
         return Tuple.of(
-            scheduleSlotTuple._1.append(Schedule.createFromOrFail(splits.get(0), task)),
+            scheduleSlotTuple._1.append(ScheduleFactory.createFromOrFail(splits.get(0), task)),
             scheduleSlotTuple._2.add(splits.get(1))
         );
     }
@@ -48,7 +49,7 @@ public class SimpleFirstFit implements Allocator {
 
     private Tuple2<List<Schedule>, TreeSet<TimeSlot>> applyFirstFitAlgorithm(Tuple2<List<Schedule>, TreeSet<TimeSlot>> scheduleSlotTuple, Task task) {
         return scheduleSlotTuple._2
-            .find(timeSlot -> Schedule.areValidScheduleParams(timeSlot, task))
+            .find(timeSlot -> ScheduleFactory.canCreateScheduleFrom(timeSlot, task))
             .map(timeSlot -> allocateTaskToSlot(scheduleSlotTuple, timeSlot, task))
             .getOrElse(scheduleSlotTuple);
     }

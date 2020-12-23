@@ -9,9 +9,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.NoSuchElementException;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TimeSlotBasics {
@@ -28,17 +26,6 @@ public class TimeSlotBasics {
             ChronoUnit.HOURS);
         timeSlot = TimeSlot.createFrom(now, future);
         halfSplit = now.plus(1, ChronoUnit.HOURS);
-    }
-
-    @Test
-    public void withStartAndEnd_shouldCreateTimeSlot() {
-        assertNotNull(timeSlot);
-    }
-
-    @Test
-    public void whenEndIsBeforeFuture_shouldThrowException() {
-        assertThrows( NoSuchElementException.class,
-            () -> TimeSlot.createFrom(future, now));
     }
 
     @Test
