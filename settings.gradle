@@ -1,3 +1,4 @@
 rootProject.name = 'karmayoga'
 include 'core'
+include 'rest-api'
 
