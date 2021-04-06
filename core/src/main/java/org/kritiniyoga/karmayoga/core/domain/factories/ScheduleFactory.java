@@ -15,10 +15,6 @@ import org.kritiniyoga.karmayoga.core.domain.entities.Schedule;
 import org.kritiniyoga.karmayoga.core.domain.entities.Task;
 import org.kritiniyoga.karmayoga.core.domain.values.TimeSlot;
 
-
-
-
-
 public class ScheduleFactory {
   private static final String ERROR_STRING_SLOT_AFTER_DEADLINE = "Slot must be before deadline";
   private static final String ERROR_STRING_TASK_BIGGER_THAN_SLOT = "Task too big for slot";
@@ -29,7 +25,13 @@ public class ScheduleFactory {
       tuple2 -> tuple2._1.getEstimate() == null
           || tuple2._1.getEstimate().compareTo(tuple2._2.length()) <= 0;
 
-
+  /**
+   * Either create a schedule from the given task and time slot combination,
+   * or fail with an exception.
+   * @param slot the time slot to schedule the task
+   * @param task the task to schedule
+   * @return a validated Schedule object.
+   */
   public static Schedule createFromOrFail(TimeSlot slot, Task task) {
     Validation<Seq<String>, Schedule> validatedResult = validationFrom(slot, task);
     return validatedResult

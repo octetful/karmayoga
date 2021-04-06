@@ -14,8 +14,6 @@ import java.util.Date;
 import lombok.NonNull;
 import lombok.Value;
 
-
-
 @Value
 public class TimeSlot implements Comparable<TimeSlot> {
   private static final String ERROR_MSG_END_BEFORE_START = "End should be after start";
@@ -27,6 +25,12 @@ public class TimeSlot implements Comparable<TimeSlot> {
     this.end = end;
   }
 
+  /**
+   * Create a timeslot instance from the start and end time.
+   * @param start the start time
+   * @param end the end time
+   * @return a TimeSlot object
+   */
   public static TimeSlot createFrom(@NonNull Instant start, @NonNull Instant end) {
     Tuple2<Instant, Instant> validatedInstances =
         checkEndIsAfterStart(Tuple.of(start, end)).get();
@@ -45,6 +49,12 @@ public class TimeSlot implements Comparable<TimeSlot> {
     );
   }
 
+  /**
+   * Split a time slot into two time slots.
+   *
+   * @param splitPoint the instance at which it should be split.
+   * @return a list of Two time slots.
+   */
   public List<TimeSlot> split(Instant splitPoint) {
     return List.of(
         createFrom(this.start, splitPoint),
