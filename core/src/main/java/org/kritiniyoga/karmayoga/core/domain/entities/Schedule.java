@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.kritiniyoga.karmayoga.core.domain.values.TimeSlot;
 
-
 @Data
 @AllArgsConstructor
 public class Schedule {
