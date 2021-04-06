@@ -1,12 +1,12 @@
-package org.kritiniyoga.karmayoga.core.services;
+package org.kritiniyoga.karmayoga.core.domain.services;
 
 import io.vavr.collection.List;
 import io.vavr.collection.Seq;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.kritiniyoga.karmayoga.core.entities.Schedule;
-import org.kritiniyoga.karmayoga.core.entities.Task;
-import org.kritiniyoga.karmayoga.core.values.TimeSlot;
+import org.kritiniyoga.karmayoga.core.domain.entities.Schedule;
+import org.kritiniyoga.karmayoga.core.domain.entities.Task;
+import org.kritiniyoga.karmayoga.core.domain.values.TimeSlot;
 
 import java.time.Duration;
 import java.time.Instant;

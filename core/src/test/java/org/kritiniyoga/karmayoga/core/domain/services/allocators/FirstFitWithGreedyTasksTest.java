@@ -1,12 +1,12 @@
-package org.kritiniyoga.karmayoga.core.services.allocators;
+package org.kritiniyoga.karmayoga.core.domain.services.allocators;
 
 import io.vavr.collection.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.kritiniyoga.karmayoga.core.entities.Task;
-import org.kritiniyoga.karmayoga.core.services.Allocator;
-import org.kritiniyoga.karmayoga.core.values.Priority;
+import org.kritiniyoga.karmayoga.core.domain.entities.Task;
+import org.kritiniyoga.karmayoga.core.domain.services.Allocator;
+import org.kritiniyoga.karmayoga.core.domain.values.Priority;
 
 
 import java.sql.Date;

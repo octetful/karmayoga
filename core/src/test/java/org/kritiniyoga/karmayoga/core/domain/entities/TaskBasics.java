@@ -1,4 +1,4 @@
-package org.kritiniyoga.karmayoga.core.entities;
+package org.kritiniyoga.karmayoga.core.domain.entities;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,12 +1,12 @@
-package org.kritiniyoga.karmayoga.core.services.allocators;
+package org.kritiniyoga.karmayoga.core.domain.services.allocators;
 
 import io.vavr.collection.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.kritiniyoga.karmayoga.core.services.Allocator;
-import org.kritiniyoga.karmayoga.core.services.AllocatorChecks;
-import org.kritiniyoga.karmayoga.core.values.TimeSlot;
+import org.kritiniyoga.karmayoga.core.domain.services.Allocator;
+import org.kritiniyoga.karmayoga.core.domain.services.AllocatorChecks;
+import org.kritiniyoga.karmayoga.core.domain.values.TimeSlot;
 
 
 import java.time.Instant;
