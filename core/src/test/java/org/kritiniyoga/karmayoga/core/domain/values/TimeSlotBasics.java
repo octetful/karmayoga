@@ -1,4 +1,4 @@
-package org.kritiniyoga.karmayoga.core.values;
+package org.kritiniyoga.karmayoga.core.domain.values;
 
 import io.vavr.collection.List;
 import org.assertj.core.api.Assertions;

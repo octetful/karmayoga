@@ -1,8 +1,8 @@
-package org.kritiniyoga.karmayoga.core.factories;
+package org.kritiniyoga.karmayoga.core.domain.factories;
 
 import org.junit.jupiter.api.Test;
-import org.kritiniyoga.karmayoga.core.entities.Task;
-import org.kritiniyoga.karmayoga.core.values.TimeSlot;
+import org.kritiniyoga.karmayoga.core.domain.entities.Task;
+import org.kritiniyoga.karmayoga.core.domain.values.TimeSlot;
 
 import java.sql.Date;
 import java.time.Duration;
