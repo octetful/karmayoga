@@ -24,7 +24,7 @@ public class SchedulingCreation {
             deadline.plus(2, ChronoUnit.HOURS));
 
         assertThrows(IllegalArgumentException.class,
-            () -> ScheduleFactory.createFromOrFail(slotBeyondDeadline, task));
+            () -> ScheduleFactory.createFromOrFail(slotBeyondDeadline, task, task.getOwner()));
     }
 
     @Test
@@ -35,6 +35,6 @@ public class SchedulingCreation {
             now.plus(1, ChronoUnit.HOURS));
 
         assertThrows(IllegalArgumentException.class,
-            () -> ScheduleFactory.createFromOrFail(smallerSlot, task));
+            () -> ScheduleFactory.createFromOrFail(smallerSlot, task, task.getOwner()));
     }
 }
