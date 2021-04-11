@@ -1,13 +1,14 @@
 package org.kritiniyoga.karmayoga.core.domain.repositories;
 
 import io.vavr.collection.Seq;
-import java.time.Duration;
-import java.util.Date;
+import java.util.Optional;
+import java.util.UUID;
 import org.kritiniyoga.karmayoga.core.domain.entities.Task;
-import org.kritiniyoga.karmayoga.core.domain.values.Priority;
 
 public interface TasksRepository {
   Seq<Task> fetchAllTasks();
 
-  Task fetchById(Long id);
+  Optional<Task> fetchById(UUID id);
+
+  void add(Task task);
 }
