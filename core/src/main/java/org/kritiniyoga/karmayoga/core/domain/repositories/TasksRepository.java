@@ -9,15 +9,5 @@ import org.kritiniyoga.karmayoga.core.domain.values.Priority;
 public interface TasksRepository {
   Seq<Task> fetchAllTasks();
 
-  Seq<Task> fetchTasksWithPriority(Priority priority);
-
-  Seq<Task> fetchTasksWithEstimate(Duration estimate);
-
-  Seq<Task> fetchTasksWithGivenDeadline(Date deadline);
-
-  Seq<Task> fetchTasksMatchingTitle(String title);
-
-  Seq<Task> fetchTasksMatchingNotes(String notes);
-
   Task fetchById(Long id);
 }

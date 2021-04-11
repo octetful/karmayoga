@@ -19,7 +19,7 @@ public class SimpleFirstFit implements Allocator {
       TimeSlot currentSlot, Task task
   ) {
     return Tuple.of(
-        scheduleSlotTuple._1.append(ScheduleFactory.createFromOrFail(currentSlot, task)),
+        scheduleSlotTuple._1.append(ScheduleFactory.createFromOrFail(currentSlot, task, task.getOwner())),
         scheduleSlotTuple._2
     );
   }
@@ -34,7 +34,7 @@ public class SimpleFirstFit implements Allocator {
   ) {
     List<TimeSlot> splits = currentSlot.split(findSplitPoint(currentSlot, task));
     return Tuple.of(
-        scheduleSlotTuple._1.append(ScheduleFactory.createFromOrFail(splits.get(0), task)),
+        scheduleSlotTuple._1.append(ScheduleFactory.createFromOrFail(splits.get(0), task, task.getOwner())),
         scheduleSlotTuple._2.add(splits.get(1))
     );
   }

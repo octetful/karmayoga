@@ -16,4 +16,5 @@ public class Task {
   Priority priority;
   Duration estimate;
   Date deadline;
+  User owner;
 }

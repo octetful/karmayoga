@@ -1,19 +1,19 @@
 package org.kritiniyoga.karmayoga.core.domain.factories;
 
-import static io.vavr.API.$;
-import static io.vavr.API.Case;
-import static io.vavr.API.Match;
-
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import io.vavr.collection.Seq;
 import io.vavr.control.Validation;
+import org.kritiniyoga.karmayoga.core.domain.entities.Schedule;
+import org.kritiniyoga.karmayoga.core.domain.entities.Task;
+import org.kritiniyoga.karmayoga.core.domain.entities.User;
+import org.kritiniyoga.karmayoga.core.domain.values.TimeSlot;
+
 import java.sql.Date;
 import java.util.UUID;
 import java.util.function.Predicate;
-import org.kritiniyoga.karmayoga.core.domain.entities.Schedule;
-import org.kritiniyoga.karmayoga.core.domain.entities.Task;
-import org.kritiniyoga.karmayoga.core.domain.values.TimeSlot;
+
+import static io.vavr.API.*;
 
 public class ScheduleFactory {
   private static final String ERROR_STRING_SLOT_AFTER_DEADLINE = "Slot must be before deadline";
@@ -28,23 +28,26 @@ public class ScheduleFactory {
   /**
    * Either create a schedule from the given task and time slot combination,
    * or fail with an exception.
+   *
    * @param slot the time slot to schedule the task
    * @param task the task to schedule
    * @return a validated Schedule object.
    */
-  public static Schedule createFromOrFail(TimeSlot slot, Task task) {
-    Validation<Seq<String>, Schedule> validatedResult = validationFrom(slot, task);
+  public static Schedule createFromOrFail(TimeSlot slot, Task task, User owner) {
+    Validation<Seq<String>, Schedule.ScheduleBuilder> validatedResult = validationFrom(slot, task);
     return validatedResult
-        .getOrElseThrow(() -> new IllegalArgumentException(validatedResult.getError().toString()));
+        .getOrElseThrow(() -> new IllegalArgumentException(validatedResult.getError().toString()))
+        .owner(owner)
+        .build();
   }
 
-  private static Validation<Seq<String>, Schedule> validationFrom(TimeSlot slot, Task task) {
+  private static Validation<Seq<String>, Schedule.ScheduleBuilder> validationFrom(TimeSlot slot, Task task) {
     Tuple2<Task, TimeSlot> taskSlotTuple = Tuple.of(task, slot);
     return Validation
         .combine(
             checkSlotIsBeforeTaskEnds(taskSlotTuple),
             checkTaskFitsSlot(taskSlotTuple))
-        .ap((result1, result2) -> new Schedule(UUID.randomUUID(), task, slot));
+        .ap((result1, result2) -> Schedule.builder().id(UUID.randomUUID()).task(task).slot(slot));
   }
 
   public static boolean canCreateScheduleFrom(TimeSlot slot, Task task) {
