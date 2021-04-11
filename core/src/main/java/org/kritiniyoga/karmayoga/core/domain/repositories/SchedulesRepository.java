@@ -2,11 +2,14 @@ package org.kritiniyoga.karmayoga.core.domain.repositories;
 
 
 import io.vavr.collection.Seq;
+import java.util.Optional;
+import java.util.UUID;
 import org.kritiniyoga.karmayoga.core.domain.entities.Schedule;
-import org.kritiniyoga.karmayoga.core.domain.values.TimeSlot;
 
 public interface SchedulesRepository {
   Seq<Schedule> fetchAllSchedules();
 
-  Schedule fetchById(Long id);
+  Optional<Schedule> fetchById(UUID id);
+
+  void add(Schedule schedule);
 }
