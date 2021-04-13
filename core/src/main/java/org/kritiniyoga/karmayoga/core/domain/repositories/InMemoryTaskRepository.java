@@ -2,11 +2,11 @@ package org.kritiniyoga.karmayoga.core.domain.repositories;
 
 import io.vavr.collection.List;
 import io.vavr.collection.Seq;
+import org.kritiniyoga.karmayoga.core.domain.entities.Task;
+
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import org.kritiniyoga.karmayoga.core.domain.entities.Task;
 
 public class InMemoryTaskRepository implements TasksRepository {
   private final Set<Task> tasks;
@@ -21,14 +21,20 @@ public class InMemoryTaskRepository implements TasksRepository {
   }
 
   @Override
-  public Optional<Task> fetchById(UUID id) {
+  public Task fetchById(UUID id) {
     return tasks.stream()
         .filter(task -> task.getId().equals(id))
-        .findFirst();
+        .findFirst()
+        .get();
   }
 
   @Override
   public void add(Task task) {
     tasks.add(task);
+  }
+
+  @Override
+  public void delete(UUID id) {
+    tasks.remove(fetchById(id));
   }
 }
