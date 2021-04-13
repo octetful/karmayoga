@@ -2,11 +2,11 @@ package org.kritiniyoga.karmayoga.core.domain.repositories;
 
 import io.vavr.collection.List;
 import io.vavr.collection.Seq;
+import org.kritiniyoga.karmayoga.core.domain.entities.Schedule;
+
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import org.kritiniyoga.karmayoga.core.domain.entities.Schedule;
 
 public class InMemoryScheduleRepository implements SchedulesRepository {
   private final Set<Schedule> schedules;
@@ -21,14 +21,20 @@ public class InMemoryScheduleRepository implements SchedulesRepository {
   }
 
   @Override
-  public Optional<Schedule> fetchById(UUID id) {
+  public Schedule fetchById(UUID id) {
     return schedules.stream()
-        .filter(schedule -> schedule.getId().equals(id))
-        .findFirst();
+        .filter(s -> s.getId().equals(id))
+        .findFirst()
+        .get();
   }
 
   @Override
   public void add(Schedule schedule) {
     schedules.add(schedule);
+  }
+
+  @Override
+  public void delete(UUID id) {
+    schedules.remove(fetchById(id));
   }
 }
