@@ -1,0 +1,12 @@
+spring:
+  profiles: default
+server:
+  port: 8080
+
+
+---
+spring:
+  profiles: development
+
+server:
+  port: 8080
